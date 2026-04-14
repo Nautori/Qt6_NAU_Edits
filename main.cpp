@@ -115,7 +115,7 @@ class MyAppEdits {
 
     // vector - urls
     void setUrls() { // find all videos
-        QDir dir("");
+        QDir dir(""); // Change directory
 
         QFileInfoList files = dir.entryInfoList(QDir::Files);
         for (QFileInfo file : files) {
