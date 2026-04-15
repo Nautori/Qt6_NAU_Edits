@@ -1,6 +1,12 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>style.css</file>
-        <file>EditsIcon.png</file>
+        <file>Icons/EditsIcon.png</file>
+        <file>Icons/Repeat.png</file>
+        <file>Icons/Back.png</file>
+        <file>Icons/Play.png</file>
+        <file>Icons/Pause.png</file>
+        <file>Icons/Random.png</file>
+        <file>Icons/Forward.png</file>
     </qresource>
 </RCC>

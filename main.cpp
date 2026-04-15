@@ -26,7 +26,7 @@ using namespace std;
 #include <QPushButton>
 
 class MyAppEdits {
-    private:
+private:
     // Create window
     QWidget *win = new QWidget();
 
@@ -56,7 +56,7 @@ class MyAppEdits {
     void setWin() {
         win->resize(365, 282);
         win->setWindowTitle("Edits");
-        win->setWindowIcon(QIcon(":/EditsIcon.png"));
+        win->setWindowIcon(QIcon(":/Icons/EditsIcon.png"));
     }
     void loadStyle() {
         QFile styleFile(":/style.css");
@@ -99,11 +99,17 @@ class MyAppEdits {
         slider->setPageStep(10);
     }
     void setButton() {
-        back->setText("⏮");
-        repeat->setText("↺");
-        playStop->setText("▶");
-        ranDom->setText("⇆");
-        forward->setText("⏭");
+        back->setIcon(QIcon(":/Icons/Back.png"));
+        repeat->setIcon(QIcon(":/Icons/Repeat.png"));
+        playStop->setIcon(QIcon(":/Icons/Pause.png"));
+        ranDom->setIcon(QIcon(":/Icons/Random.png"));
+        forward->setIcon(QIcon(":/Icons/Forward.png"));
+
+        back->setIconSize(QSize(16,16));
+        repeat->setIconSize(QSize(32,32));
+        playStop->setIconSize(QSize(16,16));
+        ranDom->setIconSize(QSize(32,32));
+        forward->setIconSize(QSize(16,16));
 
         back->setFixedSize(40, 40);
         repeat->setFixedSize(40, 40);
@@ -115,7 +121,7 @@ class MyAppEdits {
 
     // vector - urls
     void setUrls() { // find all videos
-        QDir dir(""); // Change directory
+        QDir dir(""); // set directory
 
         QFileInfoList files = dir.entryInfoList(QDir::Files);
         for (QFileInfo file : files) {
@@ -169,7 +175,7 @@ class MyAppEdits {
         player->play();
     }
 
-    public:
+public:
     void start() {
         // Settings
         setWin(); // Window
@@ -207,10 +213,10 @@ class MyAppEdits {
         });
         QObject::connect(playStop, &QPushButton::clicked, [this]() {
             if (player->isPlaying()) {
-                playStop->setText("▶");
+                playStop->setIcon(QIcon(":/Icons/Play.png"));
                 player->pause();
             } else {
-                playStop->setText("⏸");
+                playStop->setIcon(QIcon(":/Icons/Pause.png"));
                 player->play();
             }
         });
@@ -223,7 +229,6 @@ class MyAppEdits {
             videoLaunch(IdVideo);
         });
 
-        playStop->setText("⏸");
         win->show();
     }
 };
