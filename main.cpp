@@ -24,6 +24,7 @@ using namespace std;
 
 #include <QSlider>
 #include <QPushButton>
+#include <QFileDialog>
 
 class MyAppEdits {
 private:
@@ -121,7 +122,7 @@ private:
 
     // vector - urls
     void setUrls() { // find all videos
-        QDir dir(""); // set directory
+        QDir dir(QFileDialog::getExistingDirectory()); // set directory
 
         QFileInfoList files = dir.entryInfoList(QDir::Files);
         for (QFileInfo file : files) {
