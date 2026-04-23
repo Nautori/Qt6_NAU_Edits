@@ -11,6 +11,7 @@
 using namespace std;
 
 #include <QWidget>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
@@ -28,7 +29,15 @@ using namespace std;
 
 class MyAppEdits {
 private:
-    // Create window
+    // Create windows
+    QStackedWidget *stackedWidget = new QStackedWidget();
+
+    // selecting direction window
+    QWidget *selDir = new QWidget();
+    QVBoxLayout *laySelDir = new QVBoxLayout(selDir);
+    QPushButton *selDirBtn = new QPushButton();
+
+    // Base window
     QWidget *win = new QWidget();
 
     // First layout
@@ -55,14 +64,17 @@ private:
 
     // Settings
     void setWin() {
-        win->resize(365, 282);
-        win->setWindowTitle("Edits");
-        win->setWindowIcon(QIcon(":/Icons/EditsIcon.png"));
+        stackedWidget->resize(365, 282);
+        stackedWidget->setWindowTitle("Edits");
+        stackedWidget->setWindowIcon(QIcon(":/Icons/EditsIcon.png"));
+
+        stackedWidget->addWidget(selDir);
+        stackedWidget->addWidget(win);
     }
     void loadStyle() {
         QFile styleFile(":/style.css");
         if (styleFile.open(QFile::ReadOnly)) {
-            win->setStyleSheet(styleFile.readAll());
+            stackedWidget->setStyleSheet(styleFile.readAll());
             styleFile.close();
         } else {
             qDebug() << "File don`t open";
@@ -71,6 +83,10 @@ private:
 
     // Layouts
     void Layout() {
+        laySelDir->addWidget(selDirBtn);
+        selDirBtn->setObjectName("selBtn");
+        selDirBtn->setText("Select Dir");
+
         layV->addWidget(videoW);
         setPlayer();
         layV->addWidget(slider);
@@ -106,6 +122,12 @@ private:
         ranDom->setIcon(QIcon(":/Icons/Random.png"));
         forward->setIcon(QIcon(":/Icons/Forward.png"));
 
+        back->setObjectName("editBtn");
+        repeat->setObjectName("editBtn");
+        playStop->setObjectName("editBtn");
+        ranDom->setObjectName("editBtn");
+        forward->setObjectName("editBtn");
+
         back->setIconSize(QSize(16,16));
         repeat->setIconSize(QSize(32,32));
         playStop->setIconSize(QSize(16,16));
@@ -114,15 +136,14 @@ private:
 
         back->setFixedSize(40, 40);
         repeat->setFixedSize(40, 40);
-        repeat->setObjectName("repeatBtn");
         playStop->setFixedSize(40, 40);
         ranDom->setFixedSize(40, 40);
         forward->setFixedSize(40, 40);
     }
 
     // vector - urls
-    void setUrls() { // find all videos
-        QDir dir(QFileDialog::getExistingDirectory()); // set directory
+    void setUrls(const QString folder) { // find all videos
+        QDir dir(folder); // set directory
 
         QFileInfoList files = dir.entryInfoList(QDir::Files);
         for (QFileInfo file : files) {
@@ -179,11 +200,9 @@ private:
 public:
     void start() {
         // Settings
-        setWin(); // Window
-        loadStyle(); // CSS Styles
+        setWin(); // Windows
         Layout(); // Layouts
-        setUrls(); // Urls
-        videoLaunch(0); // Start
+        loadStyle(); // CSS Styles
 
         // Signals
         QObject::connect(player, &QMediaPlayer::mediaStatusChanged, [=](QMediaPlayer::MediaStatus status) mutable {
@@ -197,6 +216,15 @@ public:
 
         QObject::connect(slider, &QSlider::valueChanged, [this](int value) {
             audioOutput->setVolume(value/100.0);
+        });
+
+        QObject::connect(selDirBtn, &QPushButton::clicked, [this]() {
+            auto folder = QFileDialog::getExistingDirectory();
+            if (!folder.isEmpty()) {
+                setUrls(folder);// Urls
+                stackedWidget->setCurrentIndex(1);
+                videoLaunch(0); // Start
+            }
         });
 
         QObject::connect(back, &QPushButton::clicked, [this]() {
@@ -230,7 +258,7 @@ public:
             videoLaunch(IdVideo);
         });
 
-        win->show();
+        stackedWidget->show();
     }
 };
 

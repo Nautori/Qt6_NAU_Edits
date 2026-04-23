@@ -1,48 +1,46 @@
 QWidget {
-    background-color: #141414;
+    background-color: #c29c61;
 }
 
 QSlider::groove:horizontal {
-    border: 1px solid #3c3c3c;
+    border: 1px solid #88652d;
     height: 4px;
-    background: #333333;
+    background: #88652d;
     margin: 2px 0;
     border-radius: 3px;
 }
 QSlider::handle:horizontal {
-    background: #d4d4d4;
-    border: 1px solid #d4d4d4;
+    background: #e4ab51;
+    border: 1px solid #e4ab51;
     width: 8px;
     height: 8px;
     margin: -6px 0;
     border-radius: 4px;
 }
 QSlider::handle:horizontal:hover {
-    background: #ffeaad;
-    border-color: #ffeaad;
+    background: #e2bd83;
+    border-color: #e2bd83;
     width: 8px;
     height: 8px;
     margin: -6px 0;
     border-radius: 4px;
 }
 QSlider::sub-page:horizontal {
-    background: #545454;
+    background: #88652d;
     border-radius: 3px;
 }
 
 QPushButton {
-    background-color: #333333;
-    color: #d4d4d4;
+    color: white;
     font-size: 20px;
-    border-radius: 20px;
+    background-color: #2eb482;
 }
-
 QPushButton:hover {
-    background-color: #545454;
+    background-color: #2cda9a;
 }
 
-QPushButton#repeatBtn {
-    background-color: #333333;
+QPushButton#editBtn {
+    border-radius: 20px;
 }
 
 QPushButton#repeatBtn[active="true"] {
